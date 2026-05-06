@@ -10,7 +10,7 @@ def get_base_path():
     if getattr(sys, 'frozen', False):
         return Path(sys.executable).parent
     else:
-        return Path(__file__).parent.parent.parent
+        return Path(__file__).parent.parent
 
 BASE_PATH = get_base_path()
 CONFIG_PATH = BASE_PATH / "config.json"

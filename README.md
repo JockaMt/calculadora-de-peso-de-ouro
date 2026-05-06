@@ -1,20 +1,19 @@
-# Calculadora de Pesos de Metais - Versão 2.0
+# Calculadora de Pesos de Metais
 
-Aplicação desktop moderna para calcular pesos de metais preciosos com interface PySide6.
+Aplicação desktop para calcular pesos de metais preciosos com interface PySide6.
 
 ## 🎯 Características
 
 - ✨ Interface moderna e responsiva com **PySide6**
 - 📊 Cálculo automático de peso baseado em volume e tipo de metal
 - 🔧 Calibração de densidades de metais
-- 💰 Cotação de ouro atualizada em tempo real (BRL/USD)
-- 🔄 Atualização automática de cotações a cada 60 segundos
+- 💰 Cotação de ouro em BRL com cache local
 - 💾 Cache robusto de cotações locais
 - 🏗️ Arquitetura modular e bem documentada
 
 ## 📋 Requisitos
 
-- Python 3.13+
+- Python 3.10+
 - PySide6 6.8.1.1+
 - requests 2.31.0+
 
@@ -44,20 +43,16 @@ Calcular_peso/
 │   ├── config.py                 # Configurações centralizadas
 │   ├── core/                     # Lógica de negócio
 │   │   ├── calculator.py         # Cálculos de peso
-│   │   └── gold_price.py         # Gerenciamento de cotações
+│   │   └── gold_price_cache.py    # Gerenciamento de cotações
 │   ├── ui/                       # Interface do usuário
 │   │   ├── main_window.py        # Janela principal
 │   │   ├── dialogs/
 │   │   │   └── calibration.py    # Diálogo de calibração
-│   │   └── threads/
-│   │       └── gold_price_thread.py  # Thread de atualização
 │   └── utils/
 │       └── paths.py              # Utilitários
 ├── main.py                       # Ponto de entrada
 ├── config.json                   # Arquivo de configuração
 ├── requirements.txt              # Dependências
-├── ARCHITECTURE.md               # Documentação da arquitetura
-├── CONTRIBUTING.md               # Guia de desenvolvimento
 └── README.md                     # Este arquivo
 ```
 
@@ -88,8 +83,8 @@ Calcular_peso/
 ### Cotação de Ouro
 - Exibida na barra de status (parte inferior)
 - Cotação em Real (BRL) por grama
-- Atualização automática a cada 60 segundos
-- Indicadores: (BRL) = Atualizada | (Cache) = Local | (Padrão) = Valor fixo
+- Usa cache local por 12 horas
+- Se a API não responder, a aplicação tenta usar o último valor salvo
 
 ### Calibração
 - Ajuste de densidade de cada metal
@@ -105,21 +100,18 @@ A aplicação segue um padrão **modular em camadas**:
 - **Camada de UI**: `ui/` com componentes de interface
 - **Camada de Utilitários**: `utils/` com funções auxiliares
 
-Veja [ARCHITECTURE.md](ARCHITECTURE.md) para mais detalhes.
-
 ## 📚 Guia de Desenvolvimento
 
 Para contribuir ou estender a aplicação:
 
-1. Leia [CONTRIBUTING.md](CONTRIBUTING.md)
-2. Siga os padrões de código documentados
-3. Mantenha a separação de camadas
-4. Adicione docstrings a novas classes/funções
+1. Siga os padrões de código já existentes
+2. Mantenha a separação de camadas
+3. Adicione docstrings a novas classes/funções
 
 ### Exemplos de Extensão
 
 - **Adicionar novo metal**: Editar `src/config.py`
-- **Adicionar nova API**: Criar método em `src/core/gold_price.py`
+- **Adicionar nova API**: Criar método em `src/core/gold_price_cache.py`
 - **Criar novo diálogo**: Arquivo em `src/ui/dialogs/`
 
 ## 🔧 Compilar para Executável
@@ -155,8 +147,8 @@ Define:
 
 ## 🐛 Troubleshooting
 
-**Problema**: Erro ao fechar a aplicação
-**Solução**: Use versão 2.0 com thread corrigida
+**Problema**: A aplicação não abre em outra máquina
+**Solução**: Verifique se o Python 3.x, PySide6 e requests estão instalados corretamente.
 
 **Problema**: Cotação mostra "Indisponível"
 **Solução**: Verifique conexão de internet, aplicação usa cache se offline
@@ -174,15 +166,16 @@ Define:
 - ✅ Correção de travamento ao fechar
 - ✅ Thread de cotação melhorada
 
+### v2.1 - Compatibilidade e inicialização
+- ✅ Remoção da trava de licença por máquina
+- ✅ Correção do caminho base para `config.json`
+- ✅ Ajustes no README para refletir a estrutura atual
+
 ### v1.0 - Versão Inicial PySide6
 - Interface PySide6 funcional
 - Cálculos de peso
 - Calibração de densidades
 - Cotação de ouro
-
-## 📄 Licença
-
-Projeto mantido por JockaMt
 
 ## 📞 Suporte
 
@@ -190,7 +183,7 @@ Para reportar bugs ou sugerir melhorias, abra uma issue ou entre em contato.
 
 ---
 
-**Versão:** 2.0 (Refatorada)  
-**Data:** 24 de outubro de 2025  
-**Status:** ✅ Funcional e pronto para produção  
-**Tecnologia:** PySide6 + Python 3.13
+**Versão:** 2.1  
+**Data:** 5 de maio de 2026  
+**Status:** ✅ Funcional  
+**Tecnologia:** PySide6 + Python 3.x
